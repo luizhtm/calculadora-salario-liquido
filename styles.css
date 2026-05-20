@@ -50,7 +50,7 @@ dd {
 }
 
 .container {
-  width: min(1080px, calc(100% - 32px));
+  width: min(1120px, calc(100% - 40px));
   margin-inline: auto;
 }
 
@@ -58,9 +58,6 @@ dd {
   border-bottom: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(16px);
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
 .site-header nav,
@@ -99,12 +96,12 @@ dd {
 }
 
 .main-layout {
-  padding: 48px 0;
+  padding: 64px 0 52px;
 }
 
 .hero {
-  max-width: 760px;
-  margin-bottom: 28px;
+  max-width: 700px;
+  margin-bottom: 32px;
 }
 
 .eyebrow {
@@ -118,8 +115,8 @@ dd {
 .hero h1 {
   color: var(--ink);
   margin: 0;
-  font-size: clamp(2.1rem, 6vw, 4.4rem);
-  line-height: 1;
+  font-size: clamp(2.35rem, 4.6vw, 3.8rem);
+  line-height: 1.05;
 }
 
 .hero p {
@@ -131,8 +128,8 @@ dd {
 
 .calculator-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.8fr);
-  gap: 22px;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 394px);
+  gap: 24px;
   align-items: start;
 }
 
@@ -214,11 +211,11 @@ select:focus {
 }
 
 .field-note {
-  color: var(--muted);
+  color: var(--muted) !important;
 }
 
 .field-warning {
-  color: #9f3d10;
+  color: #9f3d10 !important;
 }
 
 input[aria-invalid="true"] {
@@ -244,7 +241,9 @@ input[aria-invalid="true"] {
 }
 
 .result-panel {
-  padding: 26px;
+  position: sticky;
+  top: 92px;
+  padding: 24px;
   color: #ffffff;
   background:
     linear-gradient(135deg, rgba(40, 120, 185, 0.86), rgba(29, 154, 98, 0.96)),
@@ -260,9 +259,9 @@ input[aria-invalid="true"] {
 
 .net-salary {
   display: block;
-  margin: 8px 0 22px;
+  margin: 10px 0 22px;
   color: #ffffff;
-  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-size: clamp(2.4rem, 4.1vw, 3.05rem);
   font-weight: 900;
   line-height: 1;
   white-space: nowrap;
@@ -270,16 +269,17 @@ input[aria-invalid="true"] {
 
 .summary-list {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .summary-list div,
 .effective-rate {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   border-radius: 8px;
-  padding: 12px;
+  padding: 10px 12px;
   background: rgba(255, 255, 255, 0.14);
 }
 
@@ -295,8 +295,12 @@ input[aria-invalid="true"] {
 }
 
 .effective-rate {
-  margin-top: 14px;
+  margin-top: 12px;
   background: rgba(18, 33, 47, 0.2);
+}
+
+.effective-rate span {
+  max-width: 210px;
 }
 
 .details-grid {
@@ -369,12 +373,13 @@ input[aria-invalid="true"] {
 
   .result-panel {
     order: -1;
+    position: static;
   }
 }
 
 @media (max-width: 560px) {
   .container {
-    width: min(100% - 24px, 1080px);
+    width: min(100% - 24px, 1120px);
   }
 
   .site-header nav,

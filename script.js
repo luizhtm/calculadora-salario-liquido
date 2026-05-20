@@ -180,12 +180,14 @@ function calculateSalary() {
     `Limite dedutível estimado: ${currency.format(privatePensionLimit)}`;
   output.privatePensionDeductible.textContent = currency.format(privatePensionDeductible);
   output.privatePensionWarning.hidden = !privatePensionExceeded;
-  fields.privatePension.setAttribute("aria-invalid", privatePensionExceeded ? "true" : "false");
 
   if (privatePensionExceeded) {
     const excess = roundMoney(privatePension - privatePensionLimit);
+    fields.privatePension.setAttribute("aria-invalid", "true");
     output.privatePensionWarning.textContent =
       `${currency.format(excess)} excede o limite estimado e não reduz o IRRF nesta simulação.`;
+  } else {
+    fields.privatePension.removeAttribute("aria-invalid");
   }
 
   output.irReduction.textContent = currency.format(irReduction);
