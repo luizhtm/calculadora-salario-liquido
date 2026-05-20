@@ -54,6 +54,20 @@ Depois acesse:
 http://localhost:8080
 ```
 
+## Como rodar os testes
+
+Os testes usam o test runner nativo do Node.js, sem dependências externas:
+
+```bash
+node --test
+```
+
+Se você tiver `npm` disponível, também pode rodar:
+
+```bash
+npm test
+```
+
 ## Atualização das tabelas
 
 As regras usadas estão concentradas no objeto `CONFIG`, no começo de `script.js`.
