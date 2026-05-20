@@ -12,7 +12,7 @@ Escolhi o Pico CSS como framework minimalista porque ele é opinativo o suficien
 
 ## O que a calculadora faz
 
-- Calcula INSS progressivo para empregado CLT, empregado doméstico e trabalhador avulso.
+- Calcula INSS progressivo para empregado CLT.
 - Calcula IRRF mensal com tabela vigente em 2026.
 - Considera dependentes, pensão alimentícia judicial, previdência complementar/PGBL, plano de saúde descontado em folha, outros descontos e benefícios.
 - Aplica o desconto simplificado mensal de R$ 607,20 quando ele for mais vantajoso, ou permite escolher manualmente.
@@ -53,22 +53,6 @@ Depois acesse:
 ```text
 http://localhost:8080
 ```
-
-## Como publicar no GitHub Pages
-
-1. Crie um repositório no GitHub.
-2. Envie estes arquivos para a branch principal:
-   - `index.html`
-   - `styles.css`
-   - `script.js`
-   - `README.md`
-3. No GitHub, abra `Settings`.
-4. Entre em `Pages`.
-5. Em `Build and deployment`, selecione:
-   - Source: `Deploy from a branch`
-   - Branch: `main`
-   - Folder: `/root`
-6. Salve e aguarde o GitHub gerar a URL.
 
 ## Atualização das tabelas
 
