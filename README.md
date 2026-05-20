@@ -68,7 +68,9 @@ npm test
 
 ## Atualização das tabelas
 
-As regras usadas estão concentradas no objeto `CONFIG`, no começo de `calculator.mjs`.
+As regras usadas estão concentradas no objeto `TAX_TABLES`, no começo de `calculator.mjs`.
+
+Cada ano tem seu próprio bloco de configuração. A calculadora usa `DEFAULT_TAX_YEAR` como ano padrão.
 
 Quando INSS ou IRRF mudarem, atualize:
 

@@ -1,4 +1,4 @@
-import { calculateSalaryBreakdown } from "./calculator.mjs";
+import { DEFAULT_TAX_YEAR, calculateSalaryBreakdown } from "./calculator.mjs";
 
 const form = document.querySelector("#salary-form");
 const resetButton = document.querySelector("#reset-button");
@@ -70,6 +70,7 @@ function getInputValues() {
     privatePension: parseMoney(fields.privatePension.value),
     healthPlan: parseMoney(fields.healthPlan.value),
     deductionMode: fields.deductionMode.value,
+    taxYear: DEFAULT_TAX_YEAR,
   };
 }
 
@@ -113,6 +114,7 @@ function calculateSalary() {
 function createCalculationMemory(result) {
   return [
     "Memória de cálculo - Salário Líquido Hoje",
+    `Ano das tabelas: ${result.taxYear}`,
     "",
     `Salário bruto: ${currency.format(result.grossSalary)}`,
     `INSS: ${currency.format(result.inss)}`,

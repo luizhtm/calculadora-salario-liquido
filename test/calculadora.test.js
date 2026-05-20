@@ -1,10 +1,14 @@
 const assert = require("node:assert/strict");
 const test = require("node:test");
 
+let DEFAULT_TAX_YEAR;
+let TAX_TABLES;
 let calculateSalaryBreakdown;
+let getTaxTable;
 
 test.before(async () => {
-  ({ calculateSalaryBreakdown } = await import("../calculator.mjs"));
+  ({ DEFAULT_TAX_YEAR, TAX_TABLES, calculateSalaryBreakdown, getTaxTable } =
+    await import("../calculator.mjs"));
 });
 
 function calculate(overrides = {}) {
@@ -17,6 +21,7 @@ function calculate(overrides = {}) {
     privatePension: 0,
     healthPlan: 0,
     deductionMode: "auto",
+    taxYear: DEFAULT_TAX_YEAR,
     ...overrides,
   });
 }
@@ -29,6 +34,7 @@ test("calcula o cenário inicial com salário bruto de R$ 6.500,00", () => {
   assert.equal(result.netSalary, 5218.57);
   assert.equal(result.privatePensionLimit, 780);
   assert.equal(result.privatePensionExceeded, false);
+  assert.equal(result.taxYear, 2026);
 });
 
 test("pensão alimentícia judicial reduz IRRF e também o salário líquido", () => {
@@ -77,4 +83,10 @@ test("modo automático usa o desconto simplificado quando ele é maior que as de
   assert.equal(result.deduction.label, "Desconto simplificado");
   assert.equal(result.irrf, 0);
   assert.equal(result.netSalary, 2751.4);
+});
+
+test("tabelas tributárias são versionadas por ano", () => {
+  assert.equal(DEFAULT_TAX_YEAR, 2026);
+  assert.deepEqual(getTaxTable(2026), TAX_TABLES[2026]);
+  assert.throws(() => getTaxTable(2027), /Tabela tributária não configurada para 2027/);
 });
