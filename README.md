@@ -34,9 +34,7 @@ Para a simulação mensal, o limite dedutível estimado é calculado como 12% do
 
 ## Como rodar localmente
 
-Como é um site estático, você pode abrir o arquivo `index.html` direto no navegador.
-
-Se preferir servir por HTTP:
+Como o JavaScript usa módulos ES, rode por HTTP local para evitar bloqueios de `file://` no navegador.
 
 ```bash
 npx serve .
@@ -70,7 +68,7 @@ npm test
 
 ## Atualização das tabelas
 
-As regras usadas estão concentradas no objeto `CONFIG`, no começo de `script.js`.
+As regras usadas estão concentradas no objeto `CONFIG`, no começo de `calculator.mjs`.
 
 Quando INSS ou IRRF mudarem, atualize:
 
