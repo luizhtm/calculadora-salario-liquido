@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Calculadora de salário líquido CLT com INSS e IRRF 2026, feita em HTML, CSS e JavaScript puro."
+    >
+    <title>Salário Líquido Hoje</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="container">
+        <a class="brand" href="./" aria-label="Salário Líquido Hoje">
+          <span class="brand-mark">R$</span>
+          <span>Salário Líquido Hoje</span>
+        </a>
+        <a class="header-link" href="#tabelas">Tabelas 2026</a>
+      </nav>
+    </header>
+
+    <main class="container main-layout">
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">CLT · Brasil · 2026</p>
+        <h1 id="page-title">Calcule seu salário líquido</h1>
+        <p>
+          Informe o salário bruto e veja uma estimativa com INSS, IRRF,
+          benefícios, descontos e alíquota efetiva.
+        </p>
+      </section>
+
+      <section class="calculator-grid" aria-label="Calculadora de salário líquido">
+        <form class="calculator-panel" id="salary-form">
+          <div class="form-header">
+            <h2>Dados do salário</h2>
+            <button type="button" class="ghost-button" id="reset-button">Limpar</button>
+          </div>
+
+          <label for="gross-salary">
+            Salário bruto mensal
+            <input
+              id="gross-salary"
+              name="grossSalary"
+              inputmode="decimal"
+              autocomplete="off"
+              placeholder="Ex.: 6500,00"
+              value="6500,00"
+            >
+          </label>
+
+          <div class="two-columns">
+            <label for="dependents">
+              Dependentes
+              <input
+                id="dependents"
+                name="dependents"
+                type="number"
+                min="0"
+                step="1"
+                value="0"
+              >
+            </label>
+
+            <label for="other-discounts">
+              Outros descontos
+              <input
+                id="other-discounts"
+                name="otherDiscounts"
+                inputmode="decimal"
+                autocomplete="off"
+                placeholder="Ex.: 250,00"
+              >
+            </label>
+          </div>
+
+          <div class="two-columns">
+            <label for="benefits">
+              Benefícios adicionais
+              <input
+                id="benefits"
+                name="benefits"
+                inputmode="decimal"
+                autocomplete="off"
+                placeholder="Ex.: 600,00"
+              >
+            </label>
+
+            <label for="pension">
+              Pensão alimentícia judicial
+              <input
+                id="pension"
+                name="pension"
+                inputmode="decimal"
+                autocomplete="off"
+                placeholder="Ex.: 0,00"
+              >
+            </label>
+          </div>
+
+          <div class="two-columns">
+            <label for="private-pension">
+              Previdência complementar / PGBL
+              <input
+                id="private-pension"
+                name="privatePension"
+                inputmode="decimal"
+                autocomplete="off"
+                placeholder="Ex.: 450,00"
+                aria-describedby="private-pension-limit private-pension-warning"
+              >
+              <small class="field-note" id="private-pension-limit">
+                Limite dedutível estimado: R$ 0,00
+              </small>
+              <small class="field-warning" id="private-pension-warning" hidden>
+                O valor informado excede a parcela estimada como dedutível.
+              </small>
+            </label>
+
+            <label for="health-plan">
+              Plano de saúde em folha
+              <input
+                id="health-plan"
+                name="healthPlan"
+                inputmode="decimal"
+                autocomplete="off"
+                placeholder="Ex.: 320,00"
+              >
+            </label>
+          </div>
+
+          <label for="deduction-mode">
+            Dedução do IRRF
+            <select id="deduction-mode" name="deductionMode">
+              <option value="auto" selected>Escolher automaticamente a melhor</option>
+              <option value="legal">Usar deduções legais</option>
+              <option value="simplified">Usar desconto simplificado</option>
+            </select>
+          </label>
+
+          <div class="helper-strip">
+            <span>Desconto por dependente: R$ 189,59</span>
+            <span>Simplificado mensal: R$ 607,20</span>
+          </div>
+        </form>
+
+        <aside class="result-panel" aria-live="polite">
+          <p class="result-label">Salário líquido estimado</p>
+          <output class="net-salary" id="net-salary">R$ 0,00</output>
+
+          <div class="summary-list">
+            <div>
+              <span>INSS</span>
+              <strong id="inss-value">R$ 0,00</strong>
+            </div>
+            <div>
+              <span>IRRF</span>
+              <strong id="irrf-value">R$ 0,00</strong>
+            </div>
+            <div>
+              <span>Outros descontos</span>
+              <strong id="discounts-value">R$ 0,00</strong>
+            </div>
+            <div>
+              <span>Pensão alimentícia</span>
+              <strong id="pension-value">R$ 0,00</strong>
+            </div>
+            <div>
+              <span>Previdência / PGBL</span>
+              <strong id="private-pension-value">R$ 0,00</strong>
+            </div>
+            <div>
+              <span>Plano de saúde</span>
+              <strong id="health-plan-value">R$ 0,00</strong>
+            </div>
+            <div>
+              <span>Benefícios</span>
+              <strong id="benefits-value">R$ 0,00</strong>
+            </div>
+          </div>
+
+          <div class="effective-rate">
+            <span>Desconto efetivo sobre o bruto</span>
+            <strong id="effective-rate">0,00%</strong>
+          </div>
+        </aside>
+      </section>
+
+      <section class="details-grid" id="tabelas">
+        <article>
+          <h2>Memória de cálculo</h2>
+          <dl class="calculation-list">
+            <div>
+              <dt>Base do IRRF</dt>
+              <dd id="ir-base">R$ 0,00</dd>
+            </div>
+            <div>
+              <dt>Dedução usada no IRRF</dt>
+              <dd id="deduction-used">R$ 0,00</dd>
+            </div>
+            <div>
+              <dt>PGBL dedutível estimado</dt>
+              <dd id="private-pension-deductible">R$ 0,00</dd>
+            </div>
+            <div>
+              <dt>Redução Lei 15.270/2025</dt>
+              <dd id="ir-reduction">R$ 0,00</dd>
+            </div>
+            <div>
+              <dt>Alíquota marginal do IRRF</dt>
+              <dd id="ir-rate">0%</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article>
+          <h2>Faixas usadas</h2>
+          <p>
+            INSS progressivo para empregado CLT, empregado doméstico e trabalhador
+            avulso vigente desde janeiro de 2026. IRRF mensal com desconto
+            simplificado opcional e redução para rendimentos até R$ 7.350,00.
+            Pensão alimentícia judicial pode reduzir a base mensal do IRRF;
+            previdência complementar/PGBL também entra como dedução legal,
+            observadas as condições tributárias e o limite anual aplicável;
+            plano de saúde descontado em folha reduz o líquido, mas entra como
+            despesa médica na declaração anual.
+          </p>
+          <p class="fine-print">
+            Esta ferramenta é uma estimativa informativa. Conferências oficiais
+            devem considerar holerite, acordos, rubricas específicas e orientação
+            contábil.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <span>Feito para publicar como página estática.</span>
+        <span>HTML · CSS · JavaScript</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
