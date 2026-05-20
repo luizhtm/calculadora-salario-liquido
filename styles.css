@@ -364,6 +364,42 @@ input[aria-invalid="true"] {
   font-size: 0.95rem;
 }
 
+.how-section {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.how-section h2 {
+  margin: 0 0 16px;
+  color: var(--ink);
+  font-size: 1.35rem;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.how-grid article {
+  border-left: 3px solid rgba(29, 154, 98, 0.42);
+  padding-left: 14px;
+}
+
+.how-grid h3 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.how-grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
 .site-footer {
   border-top: 1px solid var(--line);
   color: var(--muted);
@@ -377,7 +413,8 @@ input[aria-invalid="true"] {
   }
 
   .calculator-grid,
-  .details-grid {
+  .details-grid,
+  .how-grid {
     grid-template-columns: 1fr;
   }
 
