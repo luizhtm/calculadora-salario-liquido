@@ -261,7 +261,7 @@ input[aria-invalid="true"] {
   display: block;
   margin: 10px 0 22px;
   color: #ffffff;
-  font-size: clamp(2.4rem, 4.1vw, 3.05rem);
+  font-size: clamp(2.25rem, 3vw, 2.72rem);
   font-weight: 900;
   line-height: 1;
   white-space: nowrap;
