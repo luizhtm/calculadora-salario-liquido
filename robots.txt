@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://luizhtm.github.io/calculadora-salario-liquido/sitemap.xml

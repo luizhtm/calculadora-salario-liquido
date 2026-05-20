@@ -66,6 +66,16 @@ Se você tiver `npm` disponível, também pode rodar:
 npm test
 ```
 
+## SEO e domínio
+
+O projeto inclui `canonical`, metadados Open Graph/Twitter, `robots.txt`, `sitemap.xml` e favicon. A URL configurada é:
+
+```text
+https://luizhtm.github.io/calculadora-salario-liquido/
+```
+
+Se você usar um domínio próprio no GitHub Pages, atualize essa URL em `index.html`, `robots.txt` e `sitemap.xml`.
+
 ## Atualização das tabelas
 
 As regras usadas estão concentradas no objeto `TAX_TABLES`, no começo de `calculator.mjs`.
