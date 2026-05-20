@@ -2,6 +2,10 @@ import { calculateSalaryBreakdown } from "./calculator.mjs";
 
 const form = document.querySelector("#salary-form");
 const resetButton = document.querySelector("#reset-button");
+const copyMemoryButton = document.querySelector("#copy-memory-button");
+const copyFeedback = document.querySelector("#copy-feedback");
+let currentResult;
+let copyFeedbackTimer;
 
 const fields = {
   grossSalary: document.querySelector("#gross-salary"),
@@ -70,6 +74,7 @@ function getInputValues() {
 }
 
 function renderSalary(result) {
+  currentResult = result;
   output.netSalary.value = currency.format(result.netSalary);
   output.netSalary.textContent = currency.format(result.netSalary);
   output.inss.textContent = currency.format(result.inss);
@@ -105,6 +110,74 @@ function calculateSalary() {
   renderSalary(calculateSalaryBreakdown(getInputValues()));
 }
 
+function createCalculationMemory(result) {
+  return [
+    "Memória de cálculo - Salário Líquido Hoje",
+    "",
+    `Salário bruto: ${currency.format(result.grossSalary)}`,
+    `INSS: ${currency.format(result.inss)}`,
+    `IRRF: ${currency.format(result.irrf)}`,
+    `Outros descontos: ${currency.format(result.otherDiscounts)}`,
+    `Pensão alimentícia judicial: ${currency.format(result.pension)}`,
+    `Previdência complementar / PGBL: ${currency.format(result.privatePension)}`,
+    `PGBL dedutível estimado: ${currency.format(result.privatePensionDeductible)}`,
+    `Plano de saúde em folha: ${currency.format(result.healthPlan)}`,
+    `Benefícios adicionais: ${currency.format(result.benefits)}`,
+    "",
+    `Base do IRRF: ${currency.format(result.irBase)}`,
+    `Dedução usada no IRRF: ${currency.format(result.deduction.value)} · ${result.deduction.label}`,
+    `Redução Lei 15.270/2025: ${currency.format(result.irReduction)}`,
+    `Alíquota marginal do IRRF: ${percent.format(result.irBand.rate)}`,
+    `Desconto efetivo sobre o bruto: ${percent.format(result.effectiveRate)}`,
+    "",
+    `Salário líquido estimado: ${currency.format(result.netSalary)}`,
+  ].join("\n");
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      // Some embedded browsers expose Clipboard API but block writes.
+    }
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "-999px";
+  document.body.append(textarea);
+  textarea.select();
+  const copied = document.execCommand("copy");
+  textarea.remove();
+
+  if (!copied) {
+    throw new Error("Copy command failed");
+  }
+}
+
+function showCopyFeedback(message) {
+  window.clearTimeout(copyFeedbackTimer);
+  copyFeedback.textContent = message;
+  copyFeedbackTimer = window.setTimeout(() => {
+    copyFeedback.textContent = "";
+  }, 2600);
+}
+
+async function copyCalculationMemory() {
+  if (!currentResult) return;
+
+  try {
+    await copyText(createCalculationMemory(currentResult));
+    showCopyFeedback("Memória copiada.");
+  } catch {
+    showCopyFeedback("Não foi possível copiar automaticamente neste navegador.");
+  }
+}
+
 function resetForm() {
   fields.grossSalary.value = "";
   fields.dependents.value = "0";
@@ -121,5 +194,6 @@ function resetForm() {
 form.addEventListener("input", calculateSalary);
 form.addEventListener("change", calculateSalary);
 resetButton.addEventListener("click", resetForm);
+copyMemoryButton.addEventListener("click", copyCalculationMemory);
 
 calculateSalary();
