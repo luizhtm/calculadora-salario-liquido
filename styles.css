@@ -383,13 +383,17 @@ input[aria-invalid="true"] {
 }
 
 .how-grid article {
-  border-left: 3px solid rgba(29, 154, 98, 0.42);
-  padding-left: 14px;
+  border: 1px solid var(--line);
+  border-left: 4px solid rgba(29, 154, 98, 0.62);
+  border-radius: 8px;
+  padding: 18px;
+  background: var(--surface);
+  box-shadow: 0 12px 32px rgba(31, 57, 74, 0.08);
 }
 
 .how-grid h3 {
   margin: 0 0 8px;
-  color: var(--ink);
+  color: var(--green-dark);
   font-size: 1rem;
 }
 
