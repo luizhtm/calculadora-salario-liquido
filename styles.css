@@ -141,7 +141,6 @@ dd {
 }
 
 .hero p {
-  max-width: 620px;
   margin-top: 16px;
   color: var(--muted);
   font-size: 1.1rem;
