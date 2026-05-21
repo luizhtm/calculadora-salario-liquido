@@ -24,6 +24,8 @@ html {
 body {
   min-height: 100vh;
   color: var(--ink);
+  font-weight: 500;
+  text-rendering: optimizeLegibility;
   background:
     linear-gradient(180deg, rgba(29, 154, 98, 0.1), rgba(29, 154, 98, 0) 260px),
     var(--page-bg);
@@ -124,6 +126,7 @@ dd {
   margin-top: 16px;
   color: var(--muted);
   font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .calculator-grid {
@@ -187,6 +190,7 @@ label {
 input,
 select {
   color: var(--ink);
+  font-weight: 500;
   margin-top: 6px;
   border-color: var(--line);
   background: #ffffff;
@@ -296,6 +300,7 @@ input[aria-invalid="true"] {
 .summary-list span,
 .effective-rate span {
   color: rgba(255, 255, 255, 0.78);
+  font-weight: 500;
 }
 
 .summary-list strong,
@@ -326,6 +331,7 @@ input[aria-invalid="true"] {
 
 .details-grid p {
   color: var(--muted);
+  font-weight: 500;
 }
 
 .calculation-list {
@@ -349,6 +355,7 @@ input[aria-invalid="true"] {
 
 .calculation-list dt {
   color: var(--muted);
+  font-weight: 500;
 }
 
 .calculation-list dd {
@@ -401,6 +408,7 @@ input[aria-invalid="true"] {
   margin: 0;
   color: var(--muted);
   font-size: 0.93rem;
+  font-weight: 500;
   line-height: 1.55;
 }
 
