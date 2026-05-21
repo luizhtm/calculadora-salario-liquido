@@ -178,6 +178,11 @@ dd {
   margin-bottom: 12px;
 }
 
+.form-actions {
+  display: flex;
+  gap: 8px;
+}
+
 .form-header h2,
 .section-header h2,
 .details-grid h2 {
@@ -465,6 +470,7 @@ input[aria-invalid="true"] {
   .site-footer .container,
   .form-header,
   .section-header,
+  .form-actions,
   .two-columns,
   .summary-list div,
   .effective-rate,

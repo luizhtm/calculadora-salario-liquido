@@ -17,6 +17,7 @@ Escolhi o Pico CSS como framework minimalista porque ele é opinativo o suficien
 - Considera dependentes, pensão alimentícia judicial, previdência complementar/PGBL, plano de saúde descontado em folha, outros descontos e benefícios.
 - Aplica o desconto simplificado mensal de R$ 607,20 quando ele for mais vantajoso, ou permite escolher manualmente.
 - Aplica a redução da Lei 15.270/2025 para rendimentos mensais até R$ 7.350,00.
+- Permite copiar um link compartilhável com os campos da simulação preenchidos.
 
 ## Sobre plano de saúde e IRRF
 

@@ -2,10 +2,25 @@ import { DEFAULT_TAX_YEAR, calculateSalaryBreakdown } from "./calculator.mjs";
 
 const form = document.querySelector("#salary-form");
 const resetButton = document.querySelector("#reset-button");
+const shareLinkButton = document.querySelector("#share-link-button");
+const shareFeedback = document.querySelector("#share-feedback");
 const copyMemoryButton = document.querySelector("#copy-memory-button");
 const copyFeedback = document.querySelector("#copy-feedback");
 let currentResult;
 let copyFeedbackTimer;
+let shareFeedbackTimer;
+let shouldSyncUrl = true;
+
+const sharedFieldMap = {
+  salario: "grossSalary",
+  dependentes: "dependents",
+  outros: "otherDiscounts",
+  beneficios: "benefits",
+  pensao: "pension",
+  pgbl: "privatePension",
+  saude: "healthPlan",
+  deducao: "deductionMode",
+};
 
 const fields = {
   grossSalary: document.querySelector("#gross-salary"),
@@ -74,6 +89,56 @@ function getInputValues() {
   };
 }
 
+function applySharedParams() {
+  const params = new URLSearchParams(window.location.search);
+  let applied = false;
+
+  for (const [paramName, fieldName] of Object.entries(sharedFieldMap)) {
+    const value = params.get(paramName);
+
+    if (value === null || !(fieldName in fields)) continue;
+
+    fields[fieldName].value = value;
+    applied = true;
+  }
+
+  return applied;
+}
+
+function createSimulationUrl() {
+  const url = new URL(window.location.href);
+  const values = getInputValues();
+  const params = new URLSearchParams();
+
+  params.set("salario", fields.grossSalary.value.trim() || String(values.grossSalary));
+  params.set("dependentes", String(Math.max(Number.parseInt(fields.dependents.value, 10) || 0, 0)));
+  params.set("deducao", fields.deductionMode.value);
+
+  setOptionalParam(params, "outros", fields.otherDiscounts.value);
+  setOptionalParam(params, "beneficios", fields.benefits.value);
+  setOptionalParam(params, "pensao", fields.pension.value);
+  setOptionalParam(params, "pgbl", fields.privatePension.value);
+  setOptionalParam(params, "saude", fields.healthPlan.value);
+
+  url.search = params.toString();
+  url.hash = "";
+  return url.toString();
+}
+
+function setOptionalParam(params, name, value) {
+  const trimmed = value.trim();
+
+  if (parseMoney(trimmed) > 0) {
+    params.set(name, trimmed);
+  }
+}
+
+function syncUrlWithSimulation() {
+  if (!shouldSyncUrl) return;
+
+  window.history.replaceState({}, "", createSimulationUrl());
+}
+
 function renderSalary(result) {
   currentResult = result;
   output.netSalary.value = currency.format(result.netSalary);
@@ -109,6 +174,7 @@ function renderSalary(result) {
 
 function calculateSalary() {
   renderSalary(calculateSalaryBreakdown(getInputValues()));
+  syncUrlWithSimulation();
 }
 
 function createCalculationMemory(result) {
@@ -169,6 +235,14 @@ function showCopyFeedback(message) {
   }, 2600);
 }
 
+function showShareFeedback(message) {
+  window.clearTimeout(shareFeedbackTimer);
+  shareFeedback.textContent = message;
+  shareFeedbackTimer = window.setTimeout(() => {
+    shareFeedback.textContent = "";
+  }, 2600);
+}
+
 async function copyCalculationMemory() {
   if (!currentResult) return;
 
@@ -180,7 +254,18 @@ async function copyCalculationMemory() {
   }
 }
 
+async function copySimulationLink() {
+  try {
+    const simulationUrl = createSimulationUrl();
+    await copyText(simulationUrl);
+    showShareFeedback("Link da simulação copiado.");
+  } catch {
+    showShareFeedback("Não foi possível copiar automaticamente neste navegador.");
+  }
+}
+
 function resetForm() {
+  shouldSyncUrl = false;
   fields.grossSalary.value = "";
   fields.dependents.value = "0";
   fields.otherDiscounts.value = "";
@@ -189,6 +274,8 @@ function resetForm() {
   fields.privatePension.value = "";
   fields.healthPlan.value = "";
   fields.deductionMode.value = "auto";
+  window.history.replaceState({}, "", window.location.pathname);
+  shouldSyncUrl = true;
   calculateSalary();
   fields.grossSalary.focus();
 }
@@ -196,6 +283,8 @@ function resetForm() {
 form.addEventListener("input", calculateSalary);
 form.addEventListener("change", calculateSalary);
 resetButton.addEventListener("click", resetForm);
+shareLinkButton.addEventListener("click", copySimulationLink);
 copyMemoryButton.addEventListener("click", copyCalculationMemory);
 
+applySharedParams();
 calculateSalary();
