@@ -134,7 +134,6 @@ dd {
 
 .hero h1 {
   color: var(--ink);
-  max-width: 980px;
   margin: 0;
   font-size: clamp(2.35rem, 4.6vw, 3.8rem);
   font-weight: 800;
