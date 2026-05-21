@@ -29,7 +29,7 @@ Para o cálculo mensal do IRRF em folha, porém, as deduções comuns são INSS,
 
 Contribuições para previdência complementar/PGBL podem ser usadas como dedução legal do Imposto de Renda, observadas as condições legais. Na declaração anual, a Receita Federal informa o limite de 12% dos rendimentos tributáveis.
 
-Nesta calculadora, o campo `Previdência complementar / PGBL` reduz a base mensal do IRRF quando a opção de deduções legais for usada ou quando ela for mais vantajosa que o desconto simplificado mensal. O valor também reduz o salário líquido, porque representa desconto/aporte pago pelo trabalhador.
+Nesta calculadora, o campo `Previdência comp. (PGBL)` reduz a base mensal do IRRF quando a opção de deduções legais for usada ou quando ela for mais vantajosa que o desconto simplificado mensal. O valor também reduz o salário líquido, porque representa desconto/aporte pago pelo trabalhador.
 
 Para a simulação mensal, o limite dedutível estimado é calculado como 12% do salário bruto informado. Se o valor digitado passar desse limite, apenas a parcela estimada como dedutível reduz a base do IRRF; o valor integral continua reduzindo o salário líquido.
 

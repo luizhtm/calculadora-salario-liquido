@@ -200,7 +200,7 @@ function createCalculationMemory(result) {
     `IRRF: ${currency.format(result.irrf)}`,
     `Outros descontos: ${currency.format(result.otherDiscounts)}`,
     `Pensão alimentícia judicial: ${currency.format(result.pension)}`,
-    `Previdência complementar / PGBL: ${currency.format(result.privatePension)}`,
+    `Previdência comp. (PGBL): ${currency.format(result.privatePension)}`,
     `PGBL dedutível estimado: ${currency.format(result.privatePensionDeductible)}`,
     `Plano de saúde em folha: ${currency.format(result.healthPlan)}`,
     `Benefícios adicionais: ${currency.format(result.benefits)}`,
