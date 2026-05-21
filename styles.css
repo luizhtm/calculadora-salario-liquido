@@ -1,10 +1,10 @@
 :root {
-  --pico-font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --pico-font-family: Roboto, "Helvetica Neue", Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --page-bg: #f3f6f8;
   --surface: #ffffff;
   --surface-soft: #f8fbfc;
   --ink: #12212f;
-  --muted: #5f6f7d;
+  --muted: #4f6170;
   --line: #dbe5ea;
   --green: #1d9a62;
   --green-dark: #11734a;
@@ -19,6 +19,8 @@
 
 html {
   background: var(--page-bg);
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -35,6 +37,7 @@ body,
 button,
 input,
 select {
+  font-family: var(--pico-font-family);
   letter-spacing: 0;
 }
 
@@ -49,6 +52,21 @@ label,
 dt,
 dd {
   color: var(--ink);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 800;
+}
+
+p,
+dt,
+dd {
+  font-weight: 500;
 }
 
 .container {
@@ -88,6 +106,7 @@ dd {
   border-radius: 8px;
   color: #ffffff;
   background: var(--green);
+  font-weight: 800;
   box-shadow: 0 10px 24px rgba(29, 154, 98, 0.26);
 }
 
@@ -118,6 +137,7 @@ dd {
   color: var(--ink);
   margin: 0;
   font-size: clamp(2.35rem, 4.6vw, 3.8rem);
+  font-weight: 800;
   line-height: 1.05;
 }
 
@@ -164,6 +184,7 @@ dd {
   color: var(--ink);
   margin: 0;
   font-size: 1.35rem;
+  font-weight: 800;
 }
 
 .ghost-button {
@@ -190,7 +211,7 @@ label {
 input,
 select {
   color: var(--ink);
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 6px;
   border-color: var(--line);
   background: #ffffff;
