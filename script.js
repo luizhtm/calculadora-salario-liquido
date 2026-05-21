@@ -4,8 +4,11 @@ const form = document.querySelector("#salary-form");
 const resetButton = document.querySelector("#reset-button");
 const shareLinkButton = document.querySelector("#share-link-button");
 const shareFeedback = document.querySelector("#share-feedback");
+const shareLinkFallback = document.querySelector("#share-link-fallback");
+const shareLinkInput = document.querySelector("#share-link-input");
 const copyMemoryButton = document.querySelector("#copy-memory-button");
 const copyFeedback = document.querySelector("#copy-feedback");
+const canonicalUrl = document.querySelector("link[rel='canonical']")?.href;
 let currentResult;
 let copyFeedbackTimer;
 let shareFeedbackTimer;
@@ -105,9 +108,21 @@ function applySharedParams() {
   return applied;
 }
 
-function createSimulationUrl() {
-  const url = new URL(window.location.href);
+function createSimulationUrl(baseUrl = window.location.href) {
+  const url = new URL(baseUrl);
   const values = getInputValues();
+  const params = createSimulationParams(values);
+
+  url.search = params.toString();
+  url.hash = "";
+  return url.toString();
+}
+
+function createShareUrl() {
+  return createSimulationUrl(canonicalUrl || window.location.href);
+}
+
+function createSimulationParams(values) {
   const params = new URLSearchParams();
 
   params.set("salario", fields.grossSalary.value.trim() || String(values.grossSalary));
@@ -120,9 +135,7 @@ function createSimulationUrl() {
   setOptionalParam(params, "pgbl", fields.privatePension.value);
   setOptionalParam(params, "saude", fields.healthPlan.value);
 
-  url.search = params.toString();
-  url.hash = "";
-  return url.toString();
+  return params;
 }
 
 function setOptionalParam(params, name, value) {
@@ -255,12 +268,18 @@ async function copyCalculationMemory() {
 }
 
 async function copySimulationLink() {
+  const simulationUrl = createShareUrl();
+  shareLinkInput.value = simulationUrl;
+
   try {
-    const simulationUrl = createSimulationUrl();
     await copyText(simulationUrl);
+    shareLinkFallback.hidden = true;
     showShareFeedback("Link da simulação copiado.");
   } catch {
-    showShareFeedback("Não foi possível copiar automaticamente neste navegador.");
+    shareLinkFallback.hidden = false;
+    shareLinkInput.focus();
+    shareLinkInput.select();
+    showShareFeedback("Copie o link no campo abaixo.");
   }
 }
 

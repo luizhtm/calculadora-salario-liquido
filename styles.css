@@ -258,6 +258,14 @@ select:focus {
   font-weight: 700;
 }
 
+.share-link-fallback {
+  margin-bottom: 16px;
+}
+
+.share-link-fallback input {
+  font-size: 0.9rem;
+}
+
 input[aria-invalid="true"] {
   border-color: #c6531b;
   box-shadow: 0 0 0 3px rgba(198, 83, 27, 0.14);
